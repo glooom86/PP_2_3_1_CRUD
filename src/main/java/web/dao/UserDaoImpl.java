@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User show(int id) {
+    public User show(Long id) {
         TypedQuery<User> query = em
                 .createQuery("select u from User u WHERE u.id =:id", User.class);
         query.setParameter("id", id);
@@ -36,8 +36,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void update(int id, User updatedUser) {
-        User targetUser = show(id);
+    public void update(User updatedUser) {
+        User targetUser = show(updatedUser.getId());
         targetUser.setName(updatedUser.getName());
         targetUser.setLastName(updatedUser.getLastName());
         targetUser.setEmail(updatedUser.getEmail());
@@ -45,7 +45,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         User user = em.find(User.class, id);
         if(user != null) {
             em.remove(user);
